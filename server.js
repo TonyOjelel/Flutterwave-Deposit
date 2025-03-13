@@ -5,7 +5,8 @@ const bodyParser = require('body-parser');
 const app = express();
 app.use(bodyParser.json());
 
-const secretHash = 'FLWSECK_TEST3c3ade88ff69'; // Your Flutterwave Encryption Key
+const secretKey = 'FLWSECK-f03568cd6e5a6f0b4308d8c061c7b346-1958ee57018vt-X';
+const encryptionKey = 'f03568cd6e5abfe16861dec1';
 
 // Serve static files
 app.use(express.static(__dirname));
@@ -15,7 +16,7 @@ app.post('/webhook', (req, res) => {
     try {
         // Verify webhook signature
         const signature = req.headers['verif-hash'];
-        if (!signature || signature !== secretHash) {
+        if (!signature || signature !== secretKey) {
             return res.status(401).send('Invalid signature');
         }
 

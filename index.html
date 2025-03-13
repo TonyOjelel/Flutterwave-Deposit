@@ -66,7 +66,7 @@
     <script src="https://checkout.flutterwave.com/v3.js"></script>
     <script>
         function generateTransactionRef() {
-            return 'tx-' + Date.now() + '-' + Math.floor(Math.random() * 1000000);
+            return 'tx-' + Date.now();
         }
 
         function showError(message) {
@@ -87,38 +87,38 @@
             }
 
             const config = {
-                public_key: 'FLWPUBK_TEST-23b72e701e7741fba7b9377286efb2d5-X',
+                public_key: "FLWPUBK_TEST-0c1d38c8d8d1c71b39f65d4d2ef5e592-X",
                 tx_ref: generateTransactionRef(),
-                amount: amount,
-                currency: 'UGX',
-                payment_options: 'card,mobilemoney',
+                amount: parseFloat(amount),
+                currency: "UGX",
+                payment_method: "mobilemoneyuganda",
+                country: "UG",
                 customer: {
                     email: email,
-                    phone_number: phone,
-                    name: name,
+                    phonenumber: phone,
+                    name: name
                 },
                 customizations: {
-                    title: 'Deposit Payment',
-                    description: 'Payment for deposit',
-                    logo: 'https://assets.piedpiper.com/logo.png',
+                    title: "Deposit Payment",
+                    description: "Mobile Money Payment"
                 },
                 callback: function(response) {
-                    if (response.status === 'successful') {
-                        window.location.href = 'https://yourwebsite.com/payment-success';
+                    if (response.status === "successful") {
+                        window.location.href = '/payment-success';
                     } else {
                         showError('Payment failed. Please try again.');
                     }
                 },
                 onclose: function() {
-                    // Handle when modal is closed
-                },
+                    // Handle modal close
+                }
             };
 
             try {
                 FlutterwaveCheckout(config);
             } catch (error) {
-                showError('Failed to initialize payment. Please try again.');
-                console.error('Payment initialization error:', error);
+                showError('Payment initialization failed. Please try again.');
+                console.error('Payment error:', error);
             }
         }
     </script>
